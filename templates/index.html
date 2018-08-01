@@ -1,0 +1,891 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home</title>
+
+<!-- CSS -->
+<!-- Bootstrap -->
+<link href={% static 'css/bootstrap.min.css' %} rel="stylesheet">
+<!-- Ionicons -->
+<link href={% static "fonts/ionicons/css/ionicons.min.css" %} rel="stylesheet">
+<!-- Owl Carousel -->
+<link href={% static "css/owl.carousel.css" %} rel="stylesheet">
+<link href={% static "css/owl.theme.default.css" %} rel="stylesheet">
+<!-- Animate.css -->
+<link href={% static "css/animate.min.css" %} rel="stylesheet">
+<!--Magnific Popup -->
+<link href={% static "css/magnific-popup.css" %} rel="stylesheet">
+<!--Tagsinput CSS -->
+<link href={% static "css/tagsinput.css" %} rel="stylesheet">
+<!-- Style.css -->
+<link href={% static "css/style.css" %} rel="stylesheet">
+
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+	<div class="container clearfix">
+		<div class="header-inner flex space-between items-center">
+			<div class="left">
+				<div class="logo"><a href="index.html"><img src={% static "images/logo.png" %} alt="JobPress" class="img-responsive"></a></div>
+			</div> <!-- end .left -->				
+			<div class="right flex space-between no-column items-center">
+				<div class="navigation">
+					<nav class="main-nav">
+						<ul class="list-unstyled">
+							<li><a href="{% url 'index' %}">Home</a></li>
+                            {% if request.session.username %}
+							<li><a href="{% url 'personal' %}">个人中心</a></li>
+							<li><a id="logout">注销</a></li>
+                            {% endif %}
+						</ul>
+					</nav> <!-- end .main-nav -->
+					<a href="" class="responsive-menu-open"><i class="ion-navicon"></i></a>
+				</div> <!-- end .navigation -->
+				<div class="button-group-merged flex no-column">
+					<a href="#login" id="pesonal_btn" class="button" data-toggle="modal" data-target=".bs-modal-sm">
+                        {% if request.session.username %}
+                            {{ request.session.username }}
+                        {% else %}
+                            Sign Up
+                        {% endif %}
+                    </a>
+				</div> <!-- end .button-group-merged -->
+			</div> <!-- end .right -->
+		</div> <!-- end .header-inner -->
+	</div> <!-- end .container -->
+</header> <!-- end .header -->
+
+<!-- Responsive Menu -->
+<div class="responsive-menu">
+	<a href="" class="responsive-menu-close"><i class="ion-android-close"></i></a>
+	<nav class="responsive-nav"></nav> <!-- end .responsive-nav -->
+</div> <!-- end .responsive-menu -->
+
+<!-- Login/Signup Popup -->
+<div class="modal fade bs-modal-sm" aria-hidden="true" aria-labelledby="myTabContent"  id="login-signup-popup" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-sm login-signup-modal">
+		<div class="modal-content">
+			<div class="popup-tabs">
+				<ul class="nav nav-tabs" id="myTab">
+					<li class=""><a data-toggle="tab" href="#login">login</a></li>
+					<li class="active"><a data-toggle="tab" href="#register">Register</a></li>
+				</ul>
+			</div> <!-- end .popup-tabs -->
+			<div class="modal-body">
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade" id="login">
+						<form class="login-form" action="{% url  'login' %} }}">
+
+							<div class="form-group">
+								<label for="InputEmail1">Your Email *</label>
+								<input type="email" name="email" class="form-control" id="InputEmail1" placeholder="Enter your email">
+                                <span id="login_msg1"></span>
+							</div>
+
+							<div class="form-group">
+								<label for="InputPassword1">Password *</label>
+								<input type="password" name='psd'class="form-control" id="InputPassword1" placeholder="Password">
+                                <span id="login_msg2"></span>
+							</div>
+
+							<div class="checkbox flex space-between">
+								<div>
+									<input id="sigin-checkbox" type="checkbox">
+									<label for="sigin-checkbox">Remember me</label>
+								</div>
+								<a href="#0">Lost password?</a>
+							</div> <!-- end .checkbox -->
+
+							<button id="login_btn" type="submit" class="button" data-dismiss="modal">Login</button>
+							
+							<p class="text-center divider-text small" id="login_msg"></p>
+							
+							<div class="social-buttons">
+								<ul class="list-unstyled flex space-between">
+									<li class="twitter-btn"><a href="#0"><i class="ion-social-twitter"></i></a></li>
+									<li class="fb-btn"><a href="#0"><i class="ion-social-facebook"></i></a></li>
+									<li class="g-plus-btn"><a href="#0"><i class="ion-social-googleplus"></i></a></li>
+								</ul>
+							</div> <!-- end .social-buttons -->
+
+						</form> <!-- end .login-form -->
+					</div> <!-- end login-tab-content -->
+
+					<div class="tab-pane fade active in" id="register">
+						<form class="signup-form"  >
+							<div class="form-group">
+								<label for="InputEmail1">Your Email *</label>
+								<input name="email" type="email" class="form-control" id="InputEmail2" placeholder="Enter your email">
+                                <span id="email_msg"></span>
+							</div>
+
+							<div class="form-group">
+								<label for="InputPassword1">Password *</label>
+								<input name="psd1" type="password" class="form-control" id="InputPassword2" placeholder="Password">
+                                <span id="psd1_msg"></span>
+							</div>
+
+							<div class="form-group">
+								<label for="InputPassword2">Confirm Password *</label>
+								<input name="psd2" type="password" class="form-control" id="InputPassword3" placeholder="Password">
+                                <span id="psd2_msg"></span>
+							</div>
+
+							<div class="checkbox">
+								<input id="signup-checkbox" type="checkbox">
+								<label for="signup-checkbox">I agree with the Terms of Use</label>
+							</div> <!-- end .checkbox -->
+
+							<button  id="register_bt"  class="button" >Sign Up</button>
+
+							<p class="text-center divider-text small" id="ok_msg"></p>
+
+
+						</form> <!-- end .signup-form -->
+					</div> <!-- end signup-tab-content -->
+				</div> <!-- end .mytabcontent -->
+			</div> <!-- end .modal-body -->
+		</div> <!-- end .modal-content -->
+	</div> <!-- end .modal-dialog -->
+</div> <!-- end .modal -->
+
+<!-- Hero Section -->
+<div class="section hero-section transparent" style="background-image: url({% static 'images/background01.jpg' %});">
+	<div class="inner">
+		<div class="container">
+			<div class="job-search-form">
+				<h2>WE HAVE<span>100,000<sup>+</sup></span>jobs are waiting for you</h2>
+				<form class="form-inline flex" action="{% url 'search' %}" method="get">
+					<div class="form-group">
+						<div class="form-group-inner">
+							<input name="s_name" type="text" class="form-control" id="input-field-1" placeholder="job title / Keywords / company name">
+							<i class="ion-ios-briefcase-outline"></i>
+						</div>
+					</div>
+					<div class="form-group">							
+						<input name="s_city" type="text" class="form-control" id="input-field-2" placeholder="city / province / zip code">
+						<i class="ion-ios-location-outline"></i>
+                        <p><ul id='searchResult2' style="color: white"></ul></p>
+					</div>
+                    <button type="submit" class="button"   id="bt_search"><i id="i_search" class="ion-ios-search-strong"></i></button>
+                </form>
+
+				<div class="keywords flex">
+                    <p><ul id='searchResult' style="color: white"></ul></p>
+				</div> <!-- end .keywords -->
+			</div> <!-- end .job-search-form -->	
+		</div> <!-- end .container -->
+		<div class="features-bar">
+			<div class="container">
+				<div class="features-bar-inner flex space-between">
+					<div class="features-box self-center">
+						<h3>Leading the industry</h3>
+						<a href="about.html">About us<i class="ion-ios-arrow-thin-right"></i></a>
+					</div> <!-- end .feature-box -->
+					<div class="features-box-icon flex no-wrap">
+						<img src={% static "images/feature-icon01.png" %} alt="cup-icon" class="img-responsive self-center">
+						<div class="content self-center">
+							<h3>High average salary</h3>
+							<a href="#0">Learn more<i class="ion-ios-arrow-thin-right"></i></a>
+						</div> <!-- end .content -->							
+					</div> <!-- end .feature-box-icon -->
+					<div class="features-box-icon flex no-wrap">
+						<img src={% static "images/feature-icon02.png" %} alt="cup-icon" class="img-responsive self-center">
+						<div class="content self-center">
+							<h3>2,500,000+ candidates</h3>
+							<a href="#0">Our community<i class="ion-ios-arrow-thin-right"></i></a>
+						</div> <!-- end .content -->
+					</div> <!-- end .feature-box-icon -->
+					<div class="user-profile-icon self-center">
+						<img src={% static "images/profile-icon01.png" %} alt="profile-icon" class="img-responsive self-center">
+					</div> <!-- end .profile-icon -->
+				</div> <!-- end .features-bar-inner -->
+			</div> <!-- end .container -->
+		</div> <!-- end .features-bar -->	
+	</div> <!-- end .inner -->
+</div> <!-- end .section -->
+
+<!-- This Jobs Section -->
+<div class="section featured-jobs-section" id="JobForYou">
+	<div class="inner">
+		<div class="container">
+			<div class="section-top-content flex items-center">
+				<h1>This Jobs For You</h1>
+				<a href="#0">View all jobs<i class="ion-ios-arrow-thin-right"></i></a>
+			</div> <!-- end .section-top-content -->
+			<div class="jobs-table">
+				<div class="table-header">
+					<div class="table-cells flex">
+						<div class="job-title-cell"><h6>Job title / Company name</h6></div>
+						<div class="job-type-cell"><h6>Type</h6></div>
+						<div class="location-cell"><h6>Location</h6></div>
+						<div class="expired-date-cell"><h6>Expired Date</h6></div>
+						<div class="salary-cell"><h6>Salary</h6></div>					
+					</div> <!-- end .table-cells -->
+				</div> <!-- end .table-header -->
+                {% for job in jobs %}
+				    <div class="table-row">
+					<div class="table-cells flex no-wrap">
+						<div class="cell job-title-cell flex no-column no-wrap">
+							<div class="cell-mobile-label">
+								<h6>Company name</h6>
+							</div> <!-- end .cell-label -->
+
+							<div class="content">
+								<h3><a  href="{{ job.position.url }}">{{ job.position.name }}</a>
+                                    {% if request.session.username %}
+                                        {% if job.position.url in collect %}
+                                            <button class="escollect" title="{{ job.position.url }}"><span >取消</span></button>
+                                        {% else %}
+                                            <button class="collect" title="{{ job.position.url }}"><span >收藏</span></button>
+                                        {% endif %}
+
+                                    {% endif %}
+                                </h3>
+
+								<p>
+                                    <a href="{{ job.company.url }}">{{ job.company.name }}</a>&nbsp;&nbsp;
+                                    <span class="small">
+                                        公司性质:&nbsp;{{ job.company.nature }}&nbsp;&nbsp;|&nbsp;&nbsp;公司规模:&nbsp;{{ job.company.size }}
+                                    </span>
+                                </p>
+                                <p>
+                                    <span class="small">
+                                        学历要求:&nbsp;{{ job.demand.education_demand }}&nbsp;&nbsp;|&nbsp;&nbsp;工作经验:&nbsp;{{ job.demand.exprience_demand }}
+                                    </span>
+                                </p>
+							</div> <!-- end .content -->
+						</div> <!-- end .job-title-cell -->
+						<div class="cell job-type-cell flex no-column no-wrap">
+							<div class="cell-mobile-label">
+								<h6>Type</h6>
+							</div> <!-- end .cell-label -->
+							<button type="button" class="button full-time">{{ job.type }}</button>
+						</div>
+						<div class="cell location-cell flex no-column no-wrap">
+							<div class="cell-mobile-label">
+								<h6>Location</h6>
+							</div> <!-- end .cell-label -->
+							<p><span>{{ job.location.province }}</span></p>
+						</div>
+						<div class="cell expired-date-cell flex no-column no-wrap">
+							<div class="cell-mobile-label">
+								<h6>Expired date</h6>
+							</div> <!-- end .cell-label -->
+							<p><span>{{ job.position.time }}</span></p>
+						</div>
+						<div class="cell salary-cell flex no-column no-wrap">
+							<div class="cell-mobile-label">
+								<h6>Salary</h6>
+							</div> <!-- end .cell-label -->
+							<p><span>{{ job.salary }}</span></p>
+						</div>
+					</div> <!-- end .table-cells -->
+				</div> <!-- end .table-row -->
+                {% endfor %}
+				<div class="table-footer flex space-between items-center">
+					<h6>Showing<span>{{ jobs.number }}</span>of {{ jobs.paginator.num_pages }} </h6>
+					<div class="jobpress-custom-pager list-unstyled flex space-between no-column items-center">
+						{% if jobs.has_previous %}
+                        <a href="?{{ thejoburl }}page={{ jobs.previous_page_number }}#JobForYou" class="button">
+                            <i class="ion-ios-arrow-left"></i>Prev
+                        </a>
+                        {% endif %}
+						<ul class="list-unstyled flex no-column items-center">
+                            {% for pagenum in pagenums %}
+							<li><a href="?{{ thejoburl }}page={{ pagenum }}#JobForYou">{{ pagenum }}</a></li>
+                            {% endfor %}
+						</ul>
+                        {% if jobs.has_next %}
+						<a href="?{{ thejoburl }}page={{ jobs.next_page_number }}#JobForYou" class="button">
+                            Next<i class="ion-ios-arrow-right"></i>
+                        </a>
+                        {% endif %}
+					</div> <!-- end .jobpress-custom-pager -->
+				</div>
+			</div> <!-- end .jobs-table -->
+		</div> <!-- end .container -->
+	</div> <!-- end .inner -->
+</div> <!-- end .section -->
+
+<!-- Category Section -->
+<div class="section category-section solid-blue-bg">
+	<div class="inner">
+		<div class="container">
+			<h1 class="light">Browse Categories</h1>
+			<div class="category-grid">					
+				<div class="category-row flex no-wrap space-between items-center">
+					<div class="item">
+                        <a href="{% url 'search' %}?s_name=金融&s_city=">
+						<img src={% static "images/category-icon01.png" %} alt="category-icon" class="img-responsive">
+						<h4>金融</h4>
+						<p class="light">4286 Jobs</p>
+                        </a>
+					</div> <!-- end .item -->
+					<div class="item">
+						<img src={% static "images/category-icon02.png" %} alt="category-icon" class="img-responsive">
+						<h4>建筑</h4>
+						<p class="light">452 Jobs</p>
+					</div> <!-- end .item -->
+					<div class="item">
+						<img src={% static "images/category-icon03.png" %} alt="category-icon" class="img-responsive">
+						<h4>物流</h4>
+						<p class="light">1867 Jobs</p>
+					</div> <!-- end .item -->
+					<div class="item">
+						<img src={% static "images/category-icon04.png" %} alt="category-icon" class="img-responsive">
+						<h4>艺术/设计</h4>
+						<p class="light">3094 jobs</p>
+					</div> <!-- end .item -->
+					<div class="item">
+						<img src={% static "images/category-icon05.png" %} alt="category-icon" class="img-responsive">
+						<h4>销售/市场</h4>
+						<p class="light">2955 jobs</p>
+					</div> <!-- end .item -->
+				</div> <!-- end .category-row -->
+
+				<div class="category-row flex no-wrap space-between items-center">
+
+					<div class="item">
+                        <a href="{% url 'search' %}?s_name=软件&s_city=">
+                            <img src={% static "images/category-icon06.png" %} alt="category-icon" class="img-responsive">
+						    <h4>计算机</h4>
+						    <p class="light">470 Jobs</p>
+                        </a>
+					</div> <!-- end .item -->
+
+					<div class="item">
+						<img src={% static "images/category-icon07.png" %} alt="category-icon" class="img-responsive">
+						<h4>技术</h4>
+						<p class="light">4536 Jobs</p>
+					</div> <!-- end .item -->
+					<div class="item">
+						<img src={% static "images/category-icon08.png" %} alt="category-icon" class="img-responsive">
+						<h4>健康</h4>
+						<p class="light">2619 Jobs</p>
+					</div> <!-- end .item -->	
+					<div class="item">
+						<img src={% static "images/category-icon09.png" %} alt="category-icon" class="img-responsive">
+						<h4>教育</h4>
+						<p class="light">1132 jobs</p>
+					</div> <!-- end .item -->
+					<div class="item">
+						<img src={% static "images/category-icon10.png" %} alt="category-icon" class="img-responsive">
+						<h4>食品</h4>
+						<p class="light">757 jobs</p>
+					</div> <!-- end .item -->
+				</div> <!-- end .category-row -->
+			</div>	<!-- end .category-grid -->			
+		</div> <!-- end .container -->
+	</div> <!-- end .inner -->
+	<div class="background-text">
+		<h1>Categories</h1>
+	</div> <!-- end .background-text -->	
+</div> <!-- end .section -->
+
+<!-- Latest Jobs Section -->
+<div class="section Latest-jobs-section" id="NewJob">
+	<div class="inner">
+		<div class="container">
+			<div class="section-top-content flex items-center">
+				<h1>New Jobs</h1>
+				<a href="#0">View all jobs<i class="ion-ios-arrow-thin-right"></i></a>
+			</div> <!-- end .section-top-content -->
+			<div class="jobs-table">
+				<div class="table-header">
+					<div class="table-cells flex">
+						<div class="job-title-cell"><h6>Job title / Company name</h6></div>
+						<div class="job-type-cell"><h6>Type</h6></div>
+						<div class="location-cell"><h6>Location</h6></div>
+						<div class="expired-date-cell"><h6>Expired Date</h6></div>
+						<div class="salary-cell"><h6>Salary</h6></div>					
+					</div> <!-- end .table-cells -->
+				</div> <!-- end .table-header -->
+                {% for job in newjobs %}
+				     <div class="table-row">
+					<div class="table-cells flex no-wrap">
+						<div class="cell job-title-cell flex no-column no-wrap">
+							<div class="cell-mobile-label">
+								<h6>Company name</h6>
+							</div> <!-- end .cell-label -->
+
+							<div class="content">
+								<h3><a  href="{{ job.position.url }}">{{ job.position.name }} </a>
+                                    {% if request.session.username %}
+                                    <button class="collect" title="{{ job.position.url }}"><span>
+                                        {% if job.position.url in collect %}
+                                            取消
+                                        {% else %}
+                                            收藏
+                                        {% endif %}
+                                    </span></button>
+                                    {% endif %}
+                                </h3>
+								<p>
+                                    <a href="{{ job.company.url }}">{{ job.company.name }}</a>&nbsp;&nbsp;
+                                    <span class="small">
+                                        公司性质:&nbsp;{{ job.company.nature }}&nbsp;&nbsp;|&nbsp;&nbsp;公司规模:&nbsp;{{ job.company.size }}
+                                    </span>
+                                </p>
+                                <p>
+                                    <span class="small">
+                                        学历要求:&nbsp;{{ job.demand.education_demand }}&nbsp;&nbsp;|&nbsp;&nbsp;工作经验:&nbsp;{{ job.demand.exprience_demand }}
+                                    </span>
+                                </p>
+							</div> <!-- end .content -->
+						</div> <!-- end .job-title-cell -->
+						<div class="cell job-type-cell flex no-column no-wrap">
+							<div class="cell-mobile-label">
+								<h6>Type</h6>
+							</div> <!-- end .cell-label -->
+							<button type="button" class="button full-time">{{ job.type }}</button>
+						</div>
+						<div class="cell location-cell flex no-column no-wrap">
+							<div class="cell-mobile-label">
+								<h6>Location</h6>
+							</div> <!-- end .cell-label -->
+							<p><span>{{ job.location.province }}</span></p>
+						</div>
+						<div class="cell expired-date-cell flex no-column no-wrap">
+							<div class="cell-mobile-label">
+								<h6>Expired date</h6>
+							</div> <!-- end .cell-label -->
+							<p><span>{{ job.position.time }}</span></p>
+						</div>
+						<div class="cell salary-cell flex no-column no-wrap">
+							<div class="cell-mobile-label">
+								<h6>Salary</h6>
+							</div> <!-- end .cell-label -->
+							<p><span>{{ job.salary }}</span></p>
+						</div>
+					</div> <!-- end .table-cells -->
+				</div> <!-- end .table-row -->
+                {% endfor %}
+				<div class="table-footer flex space-between items-center">
+					<h6>Showing<span>{{ newjobs.number }}</span>of{{ newjobs.paginator.num_pages }} jobs</h6>
+					<div class="jobpress-custom-pager list-unstyled flex space-between no-column items-center">
+						{% if newjobs.has_previous %}
+                        <a href="?{{ thejoburl }}newpage={{ newjobs.previous_page_number }}#NewJob" class="button"><i class="ion-ios-arrow-left"></i>Prev</a>
+                        {% endif %}
+						<ul class="list-unstyled flex no-column items-center">
+                            {% for i in newpagenums %}
+							<li><a href="?{{ thejoburl }}&newpage={{ i }}#NewJob">{{ i }}</a></li>
+							{% endfor %}
+						</ul>
+                        {% if newjobs.has_next %}
+						<a href="?{{ thejoburl }}&newpage={{ newjobs.next_page_number }}#NewJob" class="button">Next<i class="ion-ios-arrow-right"></i></a>
+                        {% endif %}
+					</div> <!-- end .jobpress-custom-pager -->
+				</div>
+			</div> <!-- end .jobs-table -->
+		</div> <!-- end .container -->
+	</div> <!-- end .inner -->
+</div> <!-- end .section -->
+
+<div class="section cta-section parallax text-center" style="background-image: url({% static 'images/background02.jpg' %});">
+	<div class="inner">
+		<div class="container">
+			<h2>Looking for a job</h2>
+			<p class="large light">Join thousand of emplyers and earn what you deserve</p>
+			<div class="cta-button">
+				<a href="#" class="button">Get started now</a>
+			</div> <!-- end .cta-button -->
+		</div> <!-- end .container -->
+	</div> <!-- end .inner -->
+</div> <!-- end .section -->
+
+<!-- Latest News Section -->
+<div class="section Latest-news-section" id="news">
+	<div class="inner">
+		<div class="container">
+			<div class="section-top-content flex items-center">
+				<h1>Latest News</h1>
+				<a href="#">View all news<i class="ion-ios-arrow-thin-right"></i></a>
+			</div> <!-- end .section-top-content -->
+			<div class="news-grid">
+				<div class="news-grid-row flex space-between">
+					<div class="news-item">
+						<img src={% static "images/news-grid01.jpg" %} alt="news-thumbnail" class="img-responsive">
+						<div class="news-content">
+							<div class="news-meta flex no-column">
+								<h6><a href="#0" class="news-author">Nancy watson</a></h6>
+								<h6 class="publish-date">20.02.2017</h6>
+								<h6><a href="#0" class="comment-count">5 comments</a></h6>
+							</div> <!-- end .news-meta -->
+							<h3 class="news-title">Tips to write an impressive resume online for beginner</h3>
+							<p class="news-excerpt">Morbi ac eros feugiat, lacinia elit ut, elementum turpis. Curabitur justo sapien tempus.</p>
+							<a href="{% url 'news' %}" class="button">Read More</a>
+						</div> <!-- end .news-content -->
+					</div> <!-- end .news-item -->
+					<div class="news-item">
+						<img src={% static "images/news-grid02.jpg" %} alt="news-thumbnail" class="img-responsive">
+						<div class="news-content">
+							<div class="news-meta flex no-column">
+								<h6><a href="#0" class="news-author">Nancy watson</a></h6>
+								<h6 class="publish-date">20.02.2017</h6>
+								<h6><a href="#0" class="comment-count">5 comments</a></h6>
+							</div> <!-- end .news-meta -->
+							<h3 class="news-title">Let's explore 5 cool new features in JobPress theme</h3>
+							<p class="news-excerpt">Morbi ac eros feugiat, lacinia elit ut, elementum turpis. Curabitur justo sapien tempus.</p>
+							<a href="{% url 'news' %}" class="button">Read More</a>
+						</div> <!-- end .news-content -->
+					</div> <!-- end .news-item -->
+					<div class="news-item">
+						<img src={% static "images/news-grid03.jpg" %} alt="news-thumbnail" class="img-responsive">
+						<div class="news-content">
+							<div class="news-meta flex no-column">
+								<h6><a href="#0" class="news-author">Nancy watson</a></h6>
+								<h6 class="publish-date">20.02.2017</h6>
+								<h6><a href="#0" class="comment-count">5 comments</a></h6>
+							</div> <!-- end .news-meta -->
+							<h3 class="news-title">How to convince recuiters and get your dream job</h3>
+							<p class="news-excerpt">Morbi ac eros feugiat, lacinia elit ut, elementum turpis. Curabitur justo sapien tempus.</p>
+							<a href="{% url 'news' %}" class="button">Read More</a>
+						</div> <!-- end .news-content -->
+					</div> <!-- end .news-item -->
+                    <a href="?{{ thejoburl }}&newpage={{ newjobs.next_page_number }}#NewJob" class="button">Next<i class="ion-ios-arrow-right"></i></a>
+				</div>  <!-- end .news-grid-row -->						
+			</div> <!-- end .news-grid -->
+		</div> <!-- end .container -->	
+	</div> <!-- end .inner -->
+</div> <!-- end .section -->
+
+<!-- Clients Section -->
+<div class="section clients-section solid-grey-bg">
+	<div class="inner">
+		<div class="container">
+			<h1 class="section-title">Clients & Partners</h1>
+			<div class="logo-grid">
+				<div class="logo-grid-row flex space-between">
+					<div class="logo-item flex">
+						<img src={% static "images/client-logo01.png" %} alt="client-company-logo" class="img-responsive self-center">
+					</div> <!-- end .logo-item -->
+					<div class="logo-item flex">
+						<img src={% static "images/client-logo02.png" %} alt="client-company-logo" class="img-responsive self-center">
+					</div> <!-- end .logo-item -->
+					<div class="logo-item flex">
+						<img src={% static "images/client-logo03.png" %} alt="client-company-logo" class="img-responsive self-center">
+					</div> <!-- end .logo-item -->							
+					<div class="logo-item flex">
+						<img src={% static "images/client-logo04.png" %} alt="client-company-logo" class="img-responsive self-center">
+					</div> <!-- end .logo-item -->
+					<div class="logo-item flex">
+						<img src={% static "images/client-logo05.png" %} alt="client-company-logo" class="img-responsive self-center">
+					</div> <!-- end .logo-item -->							
+					<div class="logo-item flex">
+						<img src={% static "images/client-logo06.png" %} alt="client-company-logo" class="img-responsive self-center">
+					</div> <!-- end .logo-item -->
+				</div> <!-- end .logo-grid-row -->
+			</div> <!-- end .logo-grid -->
+		</div> <!-- end .container -->
+	</div> <!-- end .inner -->
+</div> <!-- end .section -->
+
+<!-- CTA App Section -->
+<div class="section cta-app-section solid-blue-bg">
+	<div class="inner">
+		<div class="container">
+			<div class="cta-app-section-inner flex space-between items-center">
+				<div class="left">
+					<h2 class="light">Don't want to miss a thing?</h2>
+					<p class="large">Just go to<span>AppStore</span>&<span>Google Play</span>to download<span>JobPress Mini</span></p>		
+				</div> <!-- end .left -->
+				<div class="button-group flex no-column">
+					<a href="#0" class="button white">Google Play</a>
+					<a href="#0" class="button white">Apple Store</a>
+				</div> <!-- end .button-group -->
+			</div> <!-- end .cta-app-section-inner -->
+		</div> <!-- end .container -->
+	</div> <!-- end .inner -->
+</div> <!-- end .section -->
+
+<!-- Footer -->
+<div class="section footer transparent" style="background-image: url({% static 'images/background03.jpg' %});">
+	<div class="container">
+		<div class="top flex space-between items-center">
+			<img src={% static "images/footer-logo.png" %} alt="footer-logo" class="img-responsive">
+			<ul class="list-unstyled footer-menu flex">
+				<li><a href="#0">Home</a></li>
+				<li><a href="#0">About</a></li>
+				<li><a href="#0">Browse Jobs</a></li>
+				<li><a href="#0">Browse candidates</a></li>
+				<li><a href="#0">Contact</a></li>
+			</ul> <!-- end .footer-menu -->				
+		</div> <!-- end .top -->
+		<div class="footer-widgets flex no-column space-between">					
+			<div class="widget">
+				<h6>About</h6>
+				<ul class="list-unstyled">
+					<li><a href="#0">Company</a></li>
+					<li><a href="#0">Our Partners</a></li>
+					<li><a href="#0">Blog</a></li>
+					<li><a href="#0">FAQ</a></li>
+					<li><a href="#0">Pricing</a></li>
+					<li><a href="#0">Help Center</a></li>
+					<li><a href="#0">Team</a></li>
+					<li><a href="#0">Contact Us</a></li>
+				</ul>
+			</div> <!-- end .widget -->
+			<div class="widget">
+				<h6>For candidates</h6>
+				<ul class="list-unstyled">
+					<li><a href="#0">Browse Jobs</a></li>
+					<li><a href="#0">Browse categories</a></li>
+					<li><a href="#0">Submit Resume</a></li>
+					<li><a href="#0">Candidate Dashboard</a></li>
+					<li><a href="#0">Job Alerts</a></li>
+					<li><a href="#0">My Bookmarks</a></li>
+				</ul>
+			</div> <!-- end .widget -->
+			<div class="widget">
+				<h6>For companies</h6>
+				<ul class="list-unstyled">
+					<li><a href="#0">Browse Candidates</a></li>
+					<li><a href="#0">Company Dashboard</a></li>
+					<li><a href="#0">Add A Job</a></li>
+					<li><a href="#0">Packages</a></li>
+				</ul>
+			</div> <!-- end .widget -->
+			<div class="widget">
+				<h6>Follow us</h6>
+				<ul class="list-unstyled social-icons flex no-column">
+					<li><a href="#0"><i class="ion-social-twitter"></i></a></li>
+					<li><a href="#0"><i class="ion-social-facebook"></i></a></li>
+					<li><a href="#0"><i class="ion-social-youtube"></i></a></li>
+					<li><a href="#0"><i class="ion-social-instagram"></i></a></li>
+					<li><a href="#0"><i class="ion-social-linkedin"></i></a></li>
+				</ul>				
+				<h6>Subscribe Us</h6>
+				<p>Morbi in ligula nibh. Maecenas ut mi at odio hendrerit eleifend tempor vitae augue.</p>
+				<form class="form-inline subscribe-form flex no-column no-wrap items-center">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Your email">
+					</div> <!-- end .form-group -->
+					<button type="submit" class="button"><i class="ion-ios-arrow-thin-right"></i></button>
+				</form>
+			</div> <!-- end .widget -->
+		</div> <!-- end .footer-widgets -->
+		<div class="bottom flex space-between items-center">
+			<p class="copyright-text small">Copyright &copy; 2017.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>
+			<ul class="list-unstyled copyright-menu flex no-column">
+				<li><a href="#0">Privacy policy</a></li>
+				<li><a href="#0">Terms of service</a></li>
+				<li><a href="#0">Conditions</a></li>
+			</ul> <!-- end .copyright-menu -->
+		</div> <!-- end .bottom -->
+	</div> <!-- end .container -->
+</div> <!-- end .footer -->
+
+
+<!-- Scripts -->
+<!-- jQuery -->		
+<script src={% static "js/jquery-3.1.1.min.js" %}></script>
+<!-- Bootstrap -->
+<script src={% static "js/bootstrap.min.js" %}></script>
+<!-- google maps -->
+<!---<script src="http://ditu.google.cn/maps/api/js?key=AIzaSyAy-PboZ3O_A25CcJ9eoiSrKokTnWyAmt8"></script>--->
+<!-- Owl Carousel -->
+<script src={% static "js/owl.carousel.min.js" %}></script>
+<!-- Wow.js -->
+<script src={% static "js/owl.carousel.min.js" %}></script>
+<!-- Typehead.js -->
+<script src={% static "js/typehead.js" %}></script>
+<!-- Tagsinput.js -->
+<script src={% static "js/tagsinput.js" %}></script>
+<!-- Bootstrap Select -->
+<script src={% static "js/bootstrap-select.js" %}></script>
+<!-- Waypoints -->
+<script src={% static "js/jquery.waypoints.min.js" %}></script>
+<!-- CountTo -->
+<script src={% static "js/jquery.countTo.js" %}></script>
+<!-- Isotope -->
+<script src={% static "js/isotope.pkgd.min.js" %}></script>
+<script src={% static "js/imagesloaded.pkgd.min.js" %}></script>
+<!-- Magnific-Popup -->
+<script src={% static "js/jquery.magnific-popup.js" %}></script>
+<!-- jquery.min.js-->
+<script src={% static "js/jquery-3.1.1.min.js" %}></script>
+
+<!-- Scripts.js -->
+<script src={% static "js/scripts.js" %}></script>
+
+<script type="application/javascript">
+   $(document).ready(function () {
+
+       $('#input-field-1').keyup(function () {
+           var q = $('#input-field-1').val();
+           $.get('/fsearch1/',{'q':q},function (data) {
+               for (var i= data.length - 1; i >= 0 ; i--){
+                   $('#searchResult').append("<li class='selectContext'>"+data[i]+"</li>")
+               };
+           })
+       });
+       $('#input-field-1').keydown(function () {
+            $('#searchResult').empty();
+       })
+       $('#searchResult').on('click','li',function () {
+           $('#input-field-1').val($(this).text())
+           $('#searchResult').empty();
+       })
+       $('#input-field-2').keyup(function () {
+           var cy = $('#input-field-2').val();
+           $.get('/fsearch2/',{'cy':cy},function (data) {
+               for (var i= data.length - 1; i >= 0 ; i--){
+                   $('#searchResult2').append("<li class='selectContext'>"+data[i]+"</li>")
+               };
+           })
+       })
+       $('#input-field-2').keydown(function () {
+           $('#searchResult2').empty()
+       })
+       $('#searchResult2').on('click','li',function () {
+           $('#input-field-2').val($(this).text());
+           $('#searchResult2').empty()
+       })
+       $('#i_search').mouseover(function () {
+           if ($('#input-field-1').val()==''&&$('#input-field-2').val()==''){
+               $("#bt_search").attr("disabled",true)
+           }else {
+               $("#bt_search").attr("disabled",false)
+           }
+       })
+       $('.collect').each(function () {
+           $(this).click(function () {
+               $(this).find("span").text('取消');
+               var job_url = $(this).attr("title");
+               $.get('/collect/',{'url':job_url},function (status) {
+                   if (status == 'yes'){
+                       window.location.reload()
+                   }else{
+                       alert('已在收藏列表')
+                   }
+               })
+           })
+       })
+
+        $('.escollect').each(function () {
+           $(this).click(function () {
+               $(this).find("span").text('收藏');
+               var job_url = $(this).attr("title");
+               $.get('/escollect/',{'url':job_url},function (status) {
+                   if (status == 'yes'){
+                       window.location.reload()
+                   }else{
+                       alert('已在收藏列表')
+                   }
+               })
+           })
+       })
+       $('#InputEmail2').focus(function () {
+           $('#email_msg').empty()
+       })
+       $('#InputEmail2').blur(function () {
+           var flag
+           var email = $(this).val()
+           var result = email.match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)
+           if (result==null){
+               $('#email_msg').empty()
+               $('#email_msg').append('<p style="color: red">请在电子邮箱包含@</p>')
+           }else{
+               $('#email_msg').empty()
+           }
+           $.get('/emaliExit/',{'email':email},function (status) {
+               if (status=='erro'){
+                   $('#email_msg').append('<p style="color: red">电子邮件被注册</p>')
+               }
+           })
+       })
+       $('#InputPassword2').focus(function () {
+           $('#psd1_msg').empty()
+       })
+       $('#InputPassword2').blur(function () {
+           var flag
+           var email = $(this).val()
+           var result = email.match(/^[a-zA-Z]\w{5,17}$/)
+           if (result==null){
+               $('#psd1_msg').empty()
+               $('#psd1_msg').append('<p style="color: red">以字母开头，只能包含字母、数字和下划线</p>')
+           }else{
+               $('#psd1_msg').empty()
+           }
+       })
+       $('#InputPassword3').mouseleave(function () {
+           var psd1 = $('#InputPassword2').val()
+           var psd2 = $(this).val()
+           if (psd1!=psd2){
+               $('#psd1_msg').empty()
+               $('#psd1_msg').append('<p style="color: red">两次密码不一致</p>')
+           }
+       })
+       $('#register_bt').mouseover(function () {
+           var email = $('#InputEmail2').val()
+           var psd1 = $('#InputPassword2').val()
+           var psd2 = $('#InputPassword3').val()
+           if (email==''||psd1==''||psd1!=psd2){
+               $('#register_bt').attr("disabled","disabled")
+           }else{
+               $('#register_bt').removeAttribute("disabled")
+           }
+       })
+       $('#register_bt').click(function () {
+           $('#ok_msg').empty()
+           var email = $('#InputEmail2').val()
+           var psd1 = $('#InputPassword2').val()
+           $.get('/register/',{'email':email,'psd1':psd1},function (status) {
+               if (status == 'yes'){
+                   $('#ok_msg').append('<span style="color: green">注册成功 请登陆</span>')
+                   $('#InputEmail2').empty()
+                   $('#InputPassword2').empty()
+                   $('#InputPassword3').empty()
+               }else {
+                   $('#email_msg').append('<p style="color: red">电子邮件被注册</p>')
+               }
+
+           })
+       })
+       $('#login_btn').mouseover(function () {
+           var email = $('#InputEmail1').val();
+           var psd = $('#InputPassword1').val();
+           if(email==''||psd==''){
+               $(this).attr("disabled","disabled")
+           }else {
+               $(this).removeAttribute("disabled")
+               alert('yes')
+           }
+       })
+       $("#login_btn").click(function () {
+           $('#login_msg').empty()
+           var email = $('#InputEmail1').val();
+           var psd = $('#InputPassword1').val();
+           if (email!=''&&psd!=''){
+               $.get('/login/',{'email':email,'psd':psd},function (status) {
+                   if (status == 'yes'){
+                       $('#login_msg').append('<span style="color: green">登陆成功</span>')
+                       $('#pesonal_btn').empty()
+                       $('#pesonal_btn').append(email)
+                       window.location.reload()
+                   }else{
+                       $('#login_msg').append('<span style="color: red">账号或密码错误</span>')
+                   }
+               })
+           }
+       })
+       $('#logout').click(function () {
+           $.get('/logout',{'p':'hello'},function (status) {
+               if (status == 'ok'){
+                   window.location.reload()
+               }
+           })
+       })
+
+   });
+</script>
+</body>
+</html>
